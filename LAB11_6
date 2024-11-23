@@ -1,0 +1,220 @@
+import java.util.HashMap;
+import java.util.Map;
+
+// Book class
+class Book {
+    private int id;
+    private String title;
+    private String author;
+
+    public Book(int id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                '}';
+    }
+}
+
+// User class
+class User {
+    private int id;
+    private String name;
+    private boolean membershipActive;
+
+    public User(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.membershipActive = true;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public boolean isMembershipActive() {
+        return membershipActive;
+    }
+
+    public void extendMembership() {
+        this.membershipActive = true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", membershipActive=" + membershipActive +
+                '}';
+    }
+}
+
+// Library class
+class Library {
+    private Map<Integer, Book> books;
+
+    public Library() {
+        books = new HashMap<>();
+    }
+
+    public void addBook(Book book) {
+        books.put(book.getId(), book);
+    }
+
+    public Book getBook(int id) {
+        return books.get(id);
+    }
+
+    public void listBooks() {
+        System.out.println("Books in Library:");
+        for (Book book : books.values()) {
+            System.out.println(book);
+        }
+    }
+}
+
+// UserManager class
+class UserManager {
+    private Map<Integer, User> users;
+
+    public UserManager() {
+        users = new HashMap<>();
+    }
+
+    public void addUser(User user) {
+        users.put(user.getId(), user);
+    }
+
+    public User getUser(int id) {
+        return users.get(id);
+    }
+}
+
+// Display class
+class Display {
+    private Book activeBook;
+    private User activeUser;
+
+    public void showActiveBook() {
+        if (activeBook != null) {
+            System.out.println("Currently Reading: " + activeBook);
+        } else {
+            System.out.println("No book is currently being read.");
+        }
+    }
+
+    public void showActiveUser() {
+        if (activeUser != null) {
+            System.out.println("Active User: " + activeUser);
+        } else {
+            System.out.println("No user is currently active.");
+        }
+    }
+
+    public void setActiveBook(Book book) {
+        this.activeBook = book;
+    }
+
+    public void setActiveUser(User user) {
+        this.activeUser = user;
+    }
+}
+
+// OnlineReaderSystem class
+public class OnlineReaderSystem {
+    private Library library;
+    private UserManager userManager;
+    private Display display;
+
+    public OnlineReaderSystem() {
+        library = new Library();
+        userManager = new UserManager();
+        display = new Display();
+    }
+
+    public void addBook(Book book) {
+        library.addBook(book);
+    }
+
+    public void addUser(User user) {
+        userManager.addUser(user);
+    }
+
+    public void setActiveUser(int userId) {
+        User user = userManager.getUser(userId);
+        if (user != null) {
+            display.setActiveUser(user);
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+
+    public void setActiveBook(int bookId) {
+        Book book = library.getBook(bookId);
+        if (book != null) {
+            display.setActiveBook(book);
+        } else {
+            System.out.println("Book not found.");
+        }
+    }
+
+    public void showActiveUser() {
+        display.showActiveUser();
+    }
+
+    public void showActiveBook() {
+        display.showActiveBook();
+    }
+
+    public void listBooks() {
+        library.listBooks();
+    }
+
+    public static void main(String[] args) {
+        OnlineReaderSystem system = new OnlineReaderSystem();
+
+        // Adding books
+        system.addBook(new Book(1, "1984", "George Orwell"));
+        system.addBook(new Book(2, "To Kill a Mockingbird", "Harper Lee"));
+        system.addBook(new Book(3, "The Great Gatsby", "F. Scott Fitzgerald"));
+
+        // Adding users
+        system.addUser(new User(1, "Alice"));
+        system.addUser(new User(2, "Bob"));
+
+        // List books in the library
+        system.listBooks();
+
+        // Set active user
+        system.setActiveUser(1);
+        system.showActiveUser();
+
+        // Set active book
+        system.setActiveBook(2);
+        system.showActiveBook();
+    }
+}
