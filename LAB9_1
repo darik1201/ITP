@@ -1,0 +1,88 @@
+// Base Animal class
+class Animal {
+    protected String name;
+    protected double height;
+    protected double weight;
+    protected String color;
+
+    public Animal(String name, double height, double weight, String color) {
+        this.name = name;
+        this.height = height;
+        this.weight = weight;
+        this.color = color;
+    }
+
+    public void eat() {
+        System.out.println(name + " is eating.");
+    }
+
+    public void sleep() {
+        System.out.println(name + " is sleeping.");
+    }
+
+    public void makeSound() {
+        System.out.println(name + " makes a sound.");
+    }
+
+    @Override
+    public String toString() {
+        return "Animal[name=" + name + ", height=" + height + ", weight=" + weight + ", color=" + color + "]";
+    }
+}
+
+// Cow class
+class Cow extends Animal {
+    public Cow(String name, double height, double weight, String color) {
+        super(name, height, weight, color);
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println(name + " says Moo.");
+    }
+}
+
+// Cat class
+class Cat extends Animal {
+    public Cat(String name, double height, double weight, String color) {
+        super(name, height, weight, color);
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println(name + " says Meow.");
+    }
+}
+
+// Dog class
+class Dog extends Animal {
+    public Dog(String name, double height, double weight, String color) {
+        super(name, height, weight, color);
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println(name + " says Woof.");
+    }
+}
+
+// Main class to test the implementation
+public class Main {
+    public static void main(String[] args) {
+        Animal cow = new Cow("Cow", 1.5, 500, "Brown");
+        Animal cat = new Cat("Cat", 0.4, 4.5, "Black");
+        Animal dog = new Dog("Dog", 0.6, 25, "Golden");
+
+        cow.eat();
+        cow.sleep();
+        cow.makeSound();
+
+        cat.eat();
+        cat.sleep();
+        cat.makeSound();
+
+        dog.eat();
+        dog.sleep();
+        dog.makeSound();
+    }
+}
