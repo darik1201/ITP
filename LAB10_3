@@ -1,0 +1,142 @@
+// Interface Swimmable
+interface Swimmable {
+    void swim();
+    void stopSwimming();
+}
+
+// Interface Flyable
+interface Flyable {
+    void fly();
+    void stopFlying();
+}
+
+// Interface Living
+interface Living {
+    default void live() {
+        System.out.println(this.getClass().getSimpleName() + " lives.");
+    }
+}
+
+// Submarine class
+class Submarine implements Swimmable {
+    private boolean isSwimming = false;
+
+    @Override
+    public void swim() {
+        if (!isSwimming) {
+            isSwimming = true;
+            System.out.println("Submarine is now swimming.");
+        } else {
+            System.out.println("Submarine is already swimming.");
+        }
+    }
+
+    @Override
+    public void stopSwimming() {
+        if (isSwimming) {
+            isSwimming = false;
+            System.out.println("Submarine stopped swimming.");
+        } else {
+            System.out.println("Submarine is not swimming.");
+        }
+    }
+}
+
+// Duck class
+class Duck implements Swimmable, Flyable, Living {
+    private boolean isSwimming = false;
+    private boolean isFlying = false;
+
+    @Override
+    public void swim() {
+        if (!isSwimming) {
+            isSwimming = true;
+            System.out.println("Duck is now swimming.");
+        } else {
+            System.out.println("Duck is already swimming.");
+        }
+    }
+
+    @Override
+    public void stopSwimming() {
+        if (isSwimming) {
+            isSwimming = false;
+            System.out.println("Duck stopped swimming.");
+        } else {
+            System.out.println("Duck is not swimming.");
+        }
+    }
+
+    @Override
+    public void fly() {
+        if (!isFlying) {
+            isFlying = true;
+            System.out.println("Duck is now flying.");
+        } else {
+            System.out.println("Duck is already flying.");
+        }
+    }
+
+    @Override
+    public void stopFlying() {
+        if (isFlying) {
+            isFlying = false;
+            System.out.println("Duck stopped flying.");
+        } else {
+            System.out.println("Duck is not flying.");
+        }
+    }
+}
+
+// Penguin class
+class Penguin implements Swimmable, Living {
+    private boolean isSwimming = false;
+
+    @Override
+    public void swim() {
+        if (!isSwimming) {
+            isSwimming = true;
+            System.out.println("Penguin is now swimming.");
+        } else {
+            System.out.println("Penguin is already swimming.");
+        }
+    }
+
+    @Override
+    public void stopSwimming() {
+        if (isSwimming) {
+            isSwimming = false;
+            System.out.println("Penguin stopped swimming.");
+        } else {
+            System.out.println("Penguin is not swimming.");
+        }
+    }
+}
+
+// InterfaceDemonstration class
+public class InterfaceDemonstration {
+    public static void main(String[] args) {
+        // Array of Living objects
+        Living[] livingObjects = {new Duck(), new Penguin()};
+
+        // Call the live() method for each living object
+        for (Living living : livingObjects) {
+            living.live();
+
+            if (living instanceof Swimmable) {
+                ((Swimmable) living).swim();
+                ((Swimmable) living).stopSwimming();
+            }
+
+            if (living instanceof Flyable) {
+                ((Flyable) living).fly();
+                ((Flyable) living).stopFlying();
+            }
+        }
+
+        // Example with Submarine
+        Submarine submarine = new Submarine();
+        submarine.swim();
+        submarine.stopSwimming();
+    }
+}
