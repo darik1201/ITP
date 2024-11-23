@@ -1,0 +1,52 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class MapRepetitiveValues {
+    public static void main(String[] args) {
+        // Create a Map<String, Integer>
+        Map<String, Integer> map = new HashMap<>();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the number of entries in the map:");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+
+        // Populate the map with user input
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter key (String): ");
+            String key = scanner.nextLine();
+
+            System.out.print("Enter value (Integer): ");
+            int value = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline
+
+            map.put(key, value);
+        }
+
+        // Display the original map
+        System.out.println("Original Map: " + map);
+
+        // Check for repetitive values
+        Map<Integer, Integer> valueCount = new HashMap<>();
+        for (int value : map.values()) {
+            valueCount.put(value, valueCount.getOrDefault(value, 0) + 1);
+        }
+
+        // Report duplicates
+        boolean hasDuplicates = false;
+        System.out.println("Repetitive Values:");
+        for (Map.Entry<Integer, Integer> entry : valueCount.entrySet()) {
+            if (entry.getValue() > 1) {
+                hasDuplicates = true;
+                System.out.println("Value: " + entry.getKey() + ", Count: " + entry.getValue());
+            }
+        }
+
+        if (!hasDuplicates) {
+            System.out.println("No repetitive values found.");
+        }
+
+        scanner.close();
+    }
+}
