@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+// Define a structure with bit fields
+struct Date {
+    unsigned int day : 5;    // 5 bits for day (0-31)
+    unsigned int month : 4;  // 4 bits for month (0-15)
+    unsigned int year : 7;   // 7 bits for year (0-127, offset for simplicity)
+};
+
+int main() {
+    // Initialize the structure
+    struct Date birthDate = {15, 8, 99}; // Example: 15th August 1999
+
+    // Print the values
+    printf("Day: %u\n", birthDate.day);
+    printf("Month: %u\n", birthDate.month);
+    printf("Year: %u\n", birthDate.year + 1900); // Offset to display as actual year
+
+    // Print the size of the structure
+    printf("Size of structure: %lu bytes\n", sizeof(birthDate));
+
+    return 0;
+}
