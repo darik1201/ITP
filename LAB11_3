@@ -1,0 +1,99 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class AnimalListManager {
+    private ArrayList<String> animals;
+
+    public AnimalListManager() {
+        animals = new ArrayList<>();
+    }
+
+    // Method to add an animal
+    public void addAnimal(String animal) {
+        animals.add(animal);
+        System.out.println(animal + " has been added to the list.");
+    }
+
+    // Method to remove an animal
+    public void removeAnimal(String animal) {
+        if (animals.remove(animal)) {
+            System.out.println(animal + " has been removed from the list.");
+        } else {
+            System.out.println(animal + " is not in the list.");
+        }
+    }
+
+    // Method to update an animal
+    public void updateAnimal(String oldAnimal, String newAnimal) {
+        int index = animals.indexOf(oldAnimal);
+        if (index != -1) {
+            animals.set(index, newAnimal);
+            System.out.println(oldAnimal + " has been updated to " + newAnimal + ".");
+        } else {
+            System.out.println(oldAnimal + " is not in the list.");
+        }
+    }
+
+    // Method to display all animals
+    public void displayAnimals() {
+        if (animals.isEmpty()) {
+            System.out.println("The animal list is empty.");
+        } else {
+            System.out.println("Animals in the list:");
+            for (String animal : animals) {
+                System.out.println("- " + animal);
+            }
+        }
+    }
+
+    // Main method to interact with the program
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        AnimalListManager manager = new AnimalListManager();
+        int choice;
+
+        System.out.println("Welcome to the Animal List Manager!");
+
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. Add an animal");
+            System.out.println("2. Remove an animal");
+            System.out.println("3. Update an animal");
+            System.out.println("4. Display all animals");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter the name of the animal to add: ");
+                    String animalToAdd = scanner.nextLine();
+                    manager.addAnimal(animalToAdd);
+                    break;
+                case 2:
+                    System.out.print("Enter the name of the animal to remove: ");
+                    String animalToRemove = scanner.nextLine();
+                    manager.removeAnimal(animalToRemove);
+                    break;
+                case 3:
+                    System.out.print("Enter the name of the animal to update: ");
+                    String oldAnimal = scanner.nextLine();
+                    System.out.print("Enter the new name of the animal: ");
+                    String newAnimal = scanner.nextLine();
+                    manager.updateAnimal(oldAnimal, newAnimal);
+                    break;
+                case 4:
+                    manager.displayAnimals();
+                    break;
+                case 5:
+                    System.out.println("Exiting the program. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 5);
+
+        scanner.close();
+    }
+}
