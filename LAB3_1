@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+// Function to calculate factorial of a number
+int factorial(int n) {
+    int fact = 1;
+    for (int i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+// Function to check if a number is a Strong Number
+int isStrongNumber(int num) {
+    int sum = 0, temp = num, digit;
+
+    while (temp > 0) {
+        digit = temp % 10;
+        sum += factorial(digit);
+        temp /= 10;
+    }
+
+    return (sum == num);
+}
+
+int main() {
+    int start, end;
+
+    printf("Enter the start of the range: ");
+    scanf("%d", &start);
+
+    printf("Enter the end of the range: ");
+    scanf("%d", &end);
+
+    printf("The strong numbers are: ");
+    for (int i = start; i <= end; i++) {
+        if (isStrongNumber(i)) {
+            printf("%d ", i);
+        }
+    }
+    printf("\n");
+
+    return 0;
+}
