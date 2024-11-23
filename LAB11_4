@@ -1,0 +1,32 @@
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+public class SetStringFilter {
+    public static void main(String[] args) {
+        // Create a Set of Strings
+        Set<String> stringSet = new HashSet<>();
+        stringSet.add("Apple");
+        stringSet.add("Banana");
+        stringSet.add("Cherry");
+        stringSet.add("Date");
+        stringSet.add("Elderberry");
+        stringSet.add("Fig");
+        stringSet.add("Grape");
+
+        // Display the original Set
+        System.out.println("Original Set: " + stringSet);
+
+        // Remove elements with odd lengths
+        Iterator<String> iterator = stringSet.iterator();
+        while (iterator.hasNext()) {
+            String element = iterator.next();
+            if (element.length() % 2 != 0) {
+                iterator.remove();
+            }
+        }
+
+        // Display the modified Set
+        System.out.println("Modified Set (Even Lengths Only): " + stringSet);
+    }
+}
