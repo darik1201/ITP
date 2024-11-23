@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+
+#define ASCII_START 32
+#define ASCII_END 126
+
+void bruteForcePassword(char *password) {
+    char guess[4] = {0}; // Max password length is 3, +1 for null-terminator
+    int attempts = 0;
+
+    for (int i = ASCII_START; i <= ASCII_END; i++) {
+        guess[0] = i;
+        guess[1] = '\0';
+        attempts++;
+        if (strcmp(password, guess) == 0) {
+            printf("found = %s\n", guess);
+            printf("number of attempts = %d\n", attempts);
+            return;
+        }
+    }
+
+    for (int i = ASCII_START; i <= ASCII_END; i++) {
+        for (int j = ASCII_START; j <= ASCII_END; j++) {
+            guess[0] = i;
+            guess[1] = j;
+            guess[2] = '\0';
+            attempts++;
+            if (strcmp(password, guess) == 0) {
+                printf("found = %s\n", guess);
+                printf("number of attempts = %d\n", attempts);
+                return;
+            }
+        }
+    }
+
+    for (int i = ASCII_START; i <= ASCII_END; i++) {
+        for (int j = ASCII_START; j <= ASCII_END; j++) {
+            for (int k = ASCII_START; k <= ASCII_END; k++) {
+                guess[0] = i;
+                guess[1] = j;
+                guess[2] = k;
+                guess[3] = '\0';
+                attempts++;
+                if (strcmp(password, guess) == 0) {
+                    printf("found = %s\n", guess);
+                    printf("number of attempts = %d\n", attempts);
+                    return;
+                }
+            }
+        }
+    }
+
+    printf("Password not found.\n");
+}
+
+int main() {
+    char password[4];
+
+    printf("Enter a password (1 to 3 characters): ");
+    fgets(password, sizeof(password), stdin);
+    password[strcspn(password, "\n")] = '\0'; // Remove trailing newline
+
+    bruteForcePassword(password);
+
+    return 0;
+}
