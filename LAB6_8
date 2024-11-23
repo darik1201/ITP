@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class NumberConversion {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter a binary number:");
+        String binary = sc.nextLine();
+        int decimalFromBinary = Integer.parseInt(binary, 2);
+        System.out.println("Decimal equivalent: " + decimalFromBinary);
+        System.out.println("Hexadecimal equivalent: " + Integer.toHexString(decimalFromBinary).toUpperCase());
+
+        System.out.println("Enter a decimal number:");
+        int decimal = sc.nextInt();
+        System.out.println("Binary equivalent: " + Integer.toBinaryString(decimal));
+        System.out.println("Hexadecimal equivalent: " + Integer.toHexString(decimal).toUpperCase());
+
+        sc.nextLine(); // consume newline
+        System.out.println("Enter a hexadecimal number:");
+        String hexadecimal = sc.nextLine();
+        int decimalFromHex = Integer.parseInt(hexadecimal, 16);
+        System.out.println("Decimal equivalent: " + decimalFromHex);
+        System.out.println("Binary equivalent: " + Integer.toBinaryString(decimalFromHex));
+    }
+}
