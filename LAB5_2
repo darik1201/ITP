@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+// Define the structure with bit fields for the IPv4 header
+struct IPv4Header {
+    unsigned int version : 4;      // 4 bits for Version
+    unsigned int IHL : 4;          // 4 bits for Internet Header Length
+    unsigned int DSCP : 6;         // 6 bits for Differentiated Services Code Point
+    unsigned int ECN : 2;          // 2 bits for Explicit Congestion Notification
+    unsigned int totalLength : 16; // 16 bits for Total Length
+};
+
+// Define a union for easier manipulation of the 32-bit integer
+union Packet {
+    unsigned int value;            // 32-bit integer value
+    struct IPv4Header header;      // Parsed structure
+};
+
+int main() {
+    union Packet packet;
+
+    // Prompt the user for the IPv4 header as an integer value
+    printf("Enter a 32-bit integer representing the IPv4 header: ");
+    scanf("%u", &packet.value);
+
+    // Print the parsed fields
+    printf("\nParsed IPv4 Header Fields:\n");
+    printf("Version: %u\n", packet.header.version);
+    printf("IHL: %u\n", packet.header.IHL);
+    printf("DSCP: %u\n", packet.header.DSCP);
+    printf("ECN: %u\n", packet.header.ECN);
+    printf("Total Length: %u\n", packet.header.totalLength);
+
+    return 0;
+}
