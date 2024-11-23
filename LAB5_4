@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_RECIPES 10
+#define MAX_INGREDIENTS 10
+
+// Structure to store ingredient information
+struct Ingredient {
+    char name[50];
+    float amount;
+};
+
+// Structure to store recipe information
+struct Recipe {
+    char name[50];
+    int ingredientCount; // Number of ingredients
+    struct Ingredient ingredients[MAX_INGREDIENTS];
+};
+
+int main() {
+    struct Recipe cookbook[MAX_RECIPES];
+    int recipeCount;
+
+    printf("Enter the number of recipes (max %d): ", MAX_RECIPES);
+    scanf("%d", &recipeCount);
+
+    if (recipeCount < 1 || recipeCount > MAX_RECIPES) {
+        printf("Invalid number of recipes.\n");
+        return 1;
+    }
+
+    // Input recipes
+    for (int i = 0; i < recipeCount; i++) {
+        printf("\nEnter name of recipe %d: ", i + 1);
+        scanf(" %[^\n]s", cookbook[i].name);
+
+        printf("Enter number of ingredients for '%s' (2 to 10): ", cookbook[i].name);
+        scanf("%d", &cookbook[i].ingredientCount);
+
+        if (cookbook[i].ingredientCount < 2 || cookbook[i].ingredientCount > MAX_INGREDIENTS) {
+            printf("Invalid number of ingredients.\n");
+            return 1;
+        }
+
+        // Input ingredients
+        for (int j = 0; j < cookbook[i].ingredientCount; j++) {
+            printf("Enter name of ingredient %d: ", j + 1);
+            scanf(" %[^\n]s", cookbook[i].ingredients[j].name);
+            printf("Enter amount of '%s': ", cookbook[i].ingredients[j].name);
+            scanf("%f", &cookbook[i].ingredients[j].amount);
+        }
+    }
+
+    // Output the cookbook
+    printf("\nCookbook:\n");
+    for (int i = 0; i < recipeCount; i++) {
+        printf("\nRecipe %d: %s\n", i + 1, cookbook[i].name);
+        printf("Ingredients:\n");
+        for (int j = 0; j < cookbook[i].ingredientCount; j++) {
+            printf("  %s: %.2f\n", cookbook[i].ingredients[j].name, cookbook[i].ingredients[j].amount);
+        }
+    }
+
+    return 0;
+}
