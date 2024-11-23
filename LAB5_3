@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+// Enum for weekdays
+enum Weekday {
+    Monday = 1,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+};
+
+// Function to get weekday name
+void printWeekday(int day) {
+    switch (day) {
+        case Monday:
+            printf("Monday\n");
+            break;
+        case Tuesday:
+            printf("Tuesday\n");
+            break;
+        case Wednesday:
+            printf("Wednesday\n");
+            break;
+        case Thursday:
+            printf("Thursday\n");
+            break;
+        case Friday:
+            printf("Friday\n");
+            break;
+        case Saturday:
+            printf("Saturday\n");
+            break;
+        case Sunday:
+            printf("Sunday\n");
+            break;
+        default:
+            printf("Invalid input! Please enter a number between 1 and 7.\n");
+    }
+}
+
+int main() {
+    int day;
+    printf("Enter a number (1 for Monday, 7 for Sunday): ");
+    scanf("%d", &day);
+
+    printWeekday(day);
+    return 0;
+}
