@@ -1,0 +1,161 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+
+// Abstract User class
+abstract class User {
+    protected int id;
+    protected String name;
+
+    public User(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+// Bill class
+class Bill {
+    private int id;
+    private String name;
+    private double amount;
+
+    public Bill(int id, String name, double amount) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void pay() {
+        System.out.println("Bill " + id + " (" + name + ") of amount $" + amount + " is paid.");
+    }
+}
+
+// Patient class
+class Patient extends User {
+    private Bill bill;
+
+    public Patient(int id, String name) {
+        super(id, name);
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
+    }
+
+    public Bill getBill() {
+        return bill;
+    }
+
+    public void payBill() {
+        if (bill != null) {
+            bill.pay();
+        } else {
+            System.out.println(name + " has no bill to pay.");
+        }
+    }
+}
+
+// Receptionist class
+class Receptionist extends User {
+    private HashMap<Integer, Appointment> appointments = new HashMap<>();
+    private int appointmentCounter = 1;
+
+    public Receptionist(int id, String name) {
+        super(id, name);
+    }
+
+    public void createAppointment(Patient patient, Doctor doctor) {
+        Appointment appointment = new Appointment(patient, doctor);
+        appointments.put(appointmentCounter++, appointment);
+        System.out.println("Appointment created between " + patient.getName() + " and Dr. " + doctor.getName());
+    }
+
+    public void generateBill(Patient patient, String billName, double amount) {
+        Bill bill = new Bill(patient.getId(), billName, amount);
+        patient.setBill(bill);
+        System.out.println("Bill generated for " + patient.getName() + ": $" + amount);
+    }
+}
+
+// Doctor class
+class Doctor extends User {
+    private ArrayList<Patient> checkedPatients = new ArrayList<>();
+
+    public Doctor(int id, String name) {
+        super(id, name);
+    }
+
+    public void checkPatient(Patient patient) {
+        checkedPatients.add(patient);
+        System.out.println("Dr. " + name + " has checked " + patient.getName());
+    }
+}
+
+// Appointment class
+class Appointment {
+    private Patient patient;
+    private Doctor doctor;
+
+    public Appointment(Patient patient, Doctor doctor) {
+        this.patient = patient;
+        this.doctor = doctor;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+}
+
+// Main class
+public class HospitalManagementSystem {
+    public static void main(String[] args) {
+        // Sample data
+        Receptionist receptionist = new Receptionist(1, "Alice");
+        Doctor doctor = new Doctor(2, "Dr. Bob");
+        Patient patient1 = new Patient(3, "John");
+        Patient patient2 = new Patient(4, "Jane");
+
+        // Interaction
+        System.out.println("Hospital Management System\n");
+
+        // Create appointments
+        receptionist.createAppointment(patient1, doctor);
+        receptionist.createAppointment(patient2, doctor);
+
+        // Doctor checks patients
+        doctor.checkPatient(patient1);
+        doctor.checkPatient(patient2);
+
+        // Generate bills
+        receptionist.generateBill(patient1, "Consultation", 150.0);
+        receptionist.generateBill(patient2, "Consultation", 200.0);
+
+        // Patients pay bills
+        patient1.payBill();
+        patient2.payBill();
+    }
+}
