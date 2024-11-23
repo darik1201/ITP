@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void printIsoscelesTriangle(int n) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j < n - i; j++) {
+            printf(" ");
+        }
+        for (int k = 0; k < 2 * i - 1; k++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+
+void printRightTriangle(int n) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j < i; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+
+void printInvertedRightTriangle(int n) {
+    for (int i = n; i > 0; i--) {
+        for (int j = 0; j < i; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+
+void printRectangle(int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice, n;
+
+    printf("Choose a pattern to print:\n");
+    printf("1. Isosceles Triangle\n");
+    printf("2. Right Triangle\n");
+    printf("3. Inverted Right Triangle\n");
+    printf("4. Rectangle\n");
+    printf("Enter your choice (1-4): ");
+    scanf("%d", &choice);
+
+    printf("Enter the height (or size for the rectangle): ");
+    scanf("%d", &n);
+
+    if (n <= 0) {
+        printf("Height must be a positive integer.\n");
+        return 1;
+    }
+
+    switch (choice) {
+        case 1:
+            printIsoscelesTriangle(n);
+        break;
+        case 2:
+            printRightTriangle(n);
+        break;
+        case 3:
+            printInvertedRightTriangle(n);
+        break;
+        case 4:
+            printRectangle(n);
+        break;
+        default:
+            printf("Invalid choice! Please choose between 1 and 4.\n");
+    }
+
+    return 0;
+}
