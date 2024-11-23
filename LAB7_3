@@ -1,0 +1,78 @@
+class Time {
+    private int hours;
+    private int minutes;
+    private int seconds;
+
+    public Time(int hours, int minutes, int seconds) {
+        this.hours = hours;
+        this.minutes = minutes;
+        this.seconds = seconds;
+        normalize();
+    }
+
+    public Time(int hours, int minutes) {
+        this(hours, minutes, 0);
+    }
+
+    public Time(int hours) {
+        this(hours, 0, 0);
+    }
+
+    private void normalize() {
+        if (seconds >= 60) {
+            minutes += seconds / 60;
+            seconds %= 60;
+        }
+        if (minutes >= 60) {
+            hours += minutes / 60;
+            minutes %= 60;
+        }
+        hours %= 24; // Assume we are working with a 24-hour format
+    }
+
+    public Time inc() {
+        this.seconds++;
+        normalize();
+        return this;
+    }
+
+    public int differenceInSeconds(Time other) {
+        int thisTotalSeconds = this.hours * 3600 + this.minutes * 60 + this.seconds;
+        int otherTotalSeconds = other.hours * 3600 + other.minutes * 60 + other.seconds;
+        return Math.abs(thisTotalSeconds - otherTotalSeconds);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+}
+
+class TimeCreator {
+    public static Time createTime(int hours, int minutes, int seconds) {
+        return new Time(hours, minutes, seconds);
+    }
+
+    public static Time createTime(int hours, int minutes) {
+        return new Time(hours, minutes);
+    }
+
+    public static Time createTime(int hours) {
+        return new Time(hours);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Time t1 = TimeCreator.createTime(2, 45, 50);
+        Time t2 = TimeCreator.createTime(4, 30, 10);
+
+        System.out.println("Time 1: " + t1);
+        System.out.println("Time 2: " + t2);
+
+        System.out.println("Difference in seconds: " + t1.differenceInSeconds(t2));
+
+        t1.inc().inc().inc(); // Increment time by 3 seconds
+        System.out.println("Time 1 after 3 increments: " + t1);
+    }
+}
