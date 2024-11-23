@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main() {
+    char text[500];
+    FILE *file;
+
+    printf("Enter a line of text: ");
+    fgets(text, sizeof(text), stdin);
+
+    file = fopen("output.txt", "w");
+    if (file == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    fprintf(file, "%s", text);
+    fclose(file);
+
+    printf("Text successfully written to 'output.txt'.\n");
+    return 0;
+}
