@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_MEMBERS 100
+
+// Enum for Moodle roles
+typedef enum {
+    Student = 0,
+    TA,
+    Professor
+} Role;
+
+// Enum for degrees
+typedef enum {
+    Secondary = 0,
+    Bachelor,
+    Master,
+    PhD
+} Degree;
+
+// Structure for Moodle members
+typedef struct {
+    char name[50];
+    Role role;
+    Degree degree;
+} MoodleMember;
+
+// Function to compare Moodle members for sorting
+int compareMembers(const void* a, const void* b) {
+    MoodleMember* memberA = (MoodleMember*)a;
+    MoodleMember* memberB = (MoodleMember*)b;
+
+    // Sort by role first
+    if (memberA->role != memberB->role) {
+        return memberA->role - memberB->role;
+    }
+
+    // If roles are the same, sort by degree
+    return memberA->degree - memberB->degree;
+}
+
+// Function to print a Moodle member
+void printMember(MoodleMember member) {
+    const char* roles[] = {"Student", "TA", "Professor"};
+    const char* degrees[] = {"Secondary", "Bachelor", "Master", "PhD"};
+
+    printf("Name: %s, Role: %s, Degree: %s\n", member.name, roles[member.role], degrees[member.degree]);
+}
+
+int main() {
+    int n;
+    MoodleMember members[MAX_MEMBERS];
+
+    printf("Enter the number of Moodle members (max %d): ", MAX_MEMBERS);
+    scanf("%d", &n);
+
+    if (n < 1 || n > MAX_MEMBERS) {
+        printf("Invalid number of members.\n");
+        return 1;
+    }
+
+    // Input Moodle members
+    for (int i = 0; i < n; i++) {
+        printf("\nEnter name of member %d: ", i + 1);
+        scanf(" %[^\n]s", members[i].name);
+
+        printf("Enter role (0 for Student, 1 for TA, 2 for Professor): ");
+        scanf("%d", (int*)&members[i].role);
+
+        printf("Enter degree (0 for Secondary, 1 for Bachelor, 2 for Master, 3 for PhD): ");
+        scanf("%d", (int*)&members[i].degree);
+    }
+
+    // Sort members
+    qsort(members, n, sizeof(MoodleMember), compareMembers);
+
+    // Print sorted members
+    printf("\nSorted Moodle Members:\n");
+    for (int i = 0; i < n; i++) {
+        printMember(members[i]);
+    }
+
+    return 0;
+}
