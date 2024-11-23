@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int stringLength(char *str) {
+    char *ptr = str; // Pointer to the beginning of the string
+    int length = 0;
+
+    while (*ptr != '\0') { // Iterate until the null terminator is reached
+        length++;
+        ptr++; // Move pointer to the next character
+    }
+
+    return length;
+}
+
+int main() {
+    char str[100];
+
+    printf("Enter a string: ");
+    fgets(str, sizeof(str), stdin);
+
+    // Remove the newline character if present
+    if (str[stringLength(str) - 1] == '\n') {
+        str[stringLength(str) - 1] = '\0';
+    }
+
+    printf("The length of the string is: %d\n", stringLength(str));
+
+    return 0;
+}
