@@ -1,0 +1,35 @@
+class Time {
+    int hours;
+    int minutes;
+
+    Time(int hours, int minutes) {
+        this.hours = hours;
+        this.minutes = minutes;
+    }
+
+    static Time difference(Time t1, Time t2) {
+        int totalMinutes1 = t1.hours * 60 + t1.minutes;
+        int totalMinutes2 = t2.hours * 60 + t2.minutes;
+        int diff = Math.abs(totalMinutes1 - totalMinutes2);
+
+        int diffHours = diff / 60;
+        int diffMinutes = diff % 60;
+
+        return new Time(diffHours, diffMinutes);
+    }
+
+    void display() {
+        System.out.println(hours + " hours and " + minutes + " minutes");
+    }
+}
+
+public class TimeDifference {
+    public static void main(String[] args) {
+        Time t1 = new Time(5, 45);
+        Time t2 = new Time(3, 20);
+
+        Time diff = Time.difference(t1, t2);
+        System.out.print("Difference: ");
+        diff.display();
+    }
+}
