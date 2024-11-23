@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+// Define the exam_day structure
+struct exam_day {
+    int day;
+    int year;
+    char month[20];
+};
+
+// Define the student structure
+struct student {
+    char name[50];
+    char surname[50];
+    int group_number;
+    struct exam_day exam; // Nested structure for exam_day
+};
+
+int main() {
+    struct student s;
+
+    // Input student details
+    printf("Enter the student's name: ");
+    fgets(s.name, sizeof(s.name), stdin);
+    s.name[strcspn(s.name, "\n")] = '\0'; // Remove trailing newline
+
+    printf("Enter the student's surname: ");
+    fgets(s.surname, sizeof(s.surname), stdin);
+    s.surname[strcspn(s.surname, "\n")] = '\0'; // Remove trailing newline
+
+    printf("Enter the student's group number: ");
+    scanf("%d", &s.group_number);
+
+    // Input exam details
+    printf("Enter the exam day (1-31): ");
+    scanf("%d", &s.exam.day);
+
+    printf("Enter the exam month (e.g., May): ");
+    scanf("%s", s.exam.month);
+
+    printf("Enter the exam year: ");
+    scanf("%d", &s.exam.year);
+
+    // Display the information
+    printf("\n--- Student Details ---\n");
+    printf("Name: %s\n", s.name);
+    printf("Surname: %s\n", s.surname);
+    printf("Group Number: %d\n", s.group_number);
+
+    printf("\n--- Exam Details ---\n");
+    printf("Date: %d %s %d\n", s.exam.day, s.exam.month, s.exam.year);
+
+    return 0;
+}
