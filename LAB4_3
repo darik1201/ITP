@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+union Data {
+    unsigned long long value;
+    unsigned char bytes[8];
+};
+
+void encryption(union Data *data) {
+    for (int i = 0; i < 8; i += 2) {
+        unsigned char temp = data->bytes[i];
+        data->bytes[i] = data->bytes[i + 1];
+        data->bytes[i + 1] = temp;
+    }
+}
+
+int main() {
+    union Data original, encrypted, decrypted;
+
+    printf("Enter an unsigned long long integer: ");
+    scanf("%llu", &original.value);
+
+    // Encrypt the original message
+    encrypted = original; // Copy original data
+    encryption(&encrypted);
+
+    // Decrypt the encrypted message
+    decrypted = encrypted; // Copy encrypted data
+    encryption(&decrypted);
+
+    // Output
+    printf("Original message: %llu\n", original.value);
+    printf("Encrypted message: %llu\n", encrypted.value);
+    printf("Decrypted message: %llu\n", decrypted.value);
+
+    return 0;
+}
