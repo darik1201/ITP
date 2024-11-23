@@ -1,0 +1,95 @@
+import java.util.ArrayList;
+
+// Abstract class Creature
+abstract class Creature {
+    protected String name = null;
+    protected boolean isAlive = false;
+
+    public abstract void bear();
+
+    public abstract void die();
+
+    public void shoutName() {
+        if (name != null) {
+            System.out.println("The name is: " + name);
+        } else {
+            System.out.println("Error: Name is not set.");
+        }
+    }
+}
+
+// Human class
+class Human extends Creature {
+    @Override
+    public void bear() {
+        this.name = "John Doe";
+        this.isAlive = true;
+        System.out.println("The Human " + name + " was born.");
+    }
+
+    @Override
+    public void die() {
+        this.isAlive = false;
+        System.out.println("The Human " + name + " has died.");
+    }
+}
+
+// Dog class
+class Dog extends Creature {
+    @Override
+    public void bear() {
+        this.name = "Buddy";
+        this.isAlive = true;
+        System.out.println("The Dog " + name + " was born.");
+    }
+
+    @Override
+    public void die() {
+        this.isAlive = false;
+        System.out.println("The Dog " + name + " has died.");
+    }
+
+    public void bark() {
+        if (isAlive) {
+            System.out.println(name + " says: Woof Woof!");
+        } else {
+            System.out.println(name + " is not alive to bark.");
+        }
+    }
+}
+
+// Alien class
+class Alien extends Creature {
+    @Override
+    public void bear() {
+        this.name = "Xorax";
+        this.isAlive = true;
+        System.out.println("The Alien " + name + " was born.");
+    }
+
+    @Override
+    public void die() {
+        this.isAlive = false;
+        System.out.println("The Alien " + name + " has died.");
+    }
+}
+
+// AbstractClassDemonstration class
+public class AbstractClassDemonstration {
+    public static void main(String[] args) {
+        ArrayList<Creature> creatures = new ArrayList<>();
+
+        creatures.add(new Human());
+        creatures.add(new Dog());
+        creatures.add(new Alien());
+
+        for (Creature creature : creatures) {
+            creature.bear();
+            creature.shoutName();
+            if (creature instanceof Dog) {
+                ((Dog) creature).bark(); // Special method for Dog
+            }
+            creature.die();
+        }
+    }
+}
