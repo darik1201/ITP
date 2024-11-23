@@ -1,0 +1,10 @@
+public class AlphabetIndex {
+    public static void main(String[] args) {
+        for (char ch = 'A'; ch <= 'Z'; ch++) {
+            System.out.println(ch + " -> " + (ch - 'A' + 1));
+        }
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            System.out.println(ch + " -> " + (ch - 'a' + 1));
+        }
+    }
+}
