@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+public class Ex2{
+    public static void main(String[] args){
+        ArrayList<String> strings = new ArrayList<>();
+        GenerateStrings(strings);
+        strings.addAll(new ArrayList<>(strings));
+        System.out.println(strings);
+        ArrayList<String> strings1 = strings.stream()
+                .filter(s -> !s.isEmpty())
+                .filter(s -> !s.matches(".*\\d*"))
+                .distinct()
+                .sorted()
+                .collect(Collectors.toCollection(ArrayList::new));
+        System.out.println(strings1);
+    }
+    public static void GenerateStrings(ArrayList<String> strings){
+        Random rand = new Random();
+        int NUMBER_WORDS = rand.nextInt(1, 30);
+        for(int i = 0; i < NUMBER_WORDS; i++){
+            int LENGTH = rand.nextInt(1, 30);
+            StringBuilder sb = new StringBuilder();
+            for(int j = 0; j < LENGTH; j++){
+                int type = rand.nextInt(0, 2);
+                if (type == 0){
+                    sb.append((char)('a' + rand.nextInt(26)));
+                }
+                else {
+                    sb.append((char) ('0' + rand.nextInt(10)));
+                }
+            }
+            strings.add(sb.toString());
+        }
+    }
+}
