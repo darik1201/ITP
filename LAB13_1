@@ -1,0 +1,126 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Media {
+    private String title;
+    private String publisher;
+
+    public Media(String title, String publisher) {
+        this.title = title;
+        this.publisher = publisher;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + ", Publisher: " + publisher;
+    }
+}
+
+class Book extends Media {
+    private String author;
+
+    public Book(String title, String publisher, String author) {
+        super(title, publisher);
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Author: " + author;
+    }
+}
+
+class Video extends Media {
+    private String director;
+
+    public Video(String title, String publisher, String director) {
+        super(title, publisher);
+        this.director = director;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Director: " + director;
+    }
+}
+
+class Newspaper extends Media {
+    private String edition;
+
+    public Newspaper(String title, String publisher, String edition) {
+        super(title, publisher);
+        this.edition = edition;
+    }
+
+    public String getEdition() {
+        return edition;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Edition: " + edition;
+    }
+}
+
+class LibraryWithGenerics<T extends Media> {
+    private List<T> mediaList;
+
+    public LibraryWithGenerics() {
+        mediaList = new ArrayList<>();
+    }
+
+    public void addMedia(T media) {
+        mediaList.add(media);
+    }
+
+    public List<T> getMediaList() {
+        return mediaList;
+    }
+
+    public void displayLibrary() {
+        for (T media : mediaList) {
+            System.out.println(media);
+        }
+    }
+}
+
+public class MainWithGenerics {
+    public static void main(String[] args) {
+        LibraryWithGenerics<Book> bookLibrary = new LibraryWithGenerics<>();
+        LibraryWithGenerics<Video> videoLibrary = new LibraryWithGenerics<>();
+        LibraryWithGenerics<Newspaper> newspaperLibrary = new LibraryWithGenerics<>();
+
+        Book book = new Book("Java Programming", "O'Reilly", "Herbert Schildt");
+        Video video = new Video("Inception", "Warner Bros", "Christopher Nolan");
+        Newspaper newspaper = new Newspaper("The New York Times", "NYT", "October 2024");
+
+        bookLibrary.addMedia(book);
+        videoLibrary.addMedia(video);
+        newspaperLibrary.addMedia(newspaper);
+
+        System.out.println("Book Library:");
+        bookLibrary.displayLibrary();
+
+        System.out.println("\nVideo Library:");
+        videoLibrary.displayLibrary();
+
+        System.out.println("\nNewspaper Library:");
+        newspaperLibrary.displayLibrary();
+    }
+}
