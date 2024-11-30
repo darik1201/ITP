@@ -1,0 +1,169 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+abstract class Animal {
+    private int id;
+    private String nickname;
+    private Owner owner;
+
+    public Animal(int id, String nickname, Owner owner) {
+        this.id = id;
+        this.nickname = nickname;
+        this.owner = owner;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public abstract void displayInfo();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return id == animal.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+}
+
+class Owner {
+    private String name;
+    private String surname;
+    private int age;
+
+    public Owner(String name, String surname, int age) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + surname + ", Age: " + age;
+    }
+}
+
+class Cat extends Animal {
+    private int purLoudness;
+
+    public Cat(int id, String nickname, Owner owner, int purLoudness) {
+        super(id, nickname, owner);
+        this.purLoudness = purLoudness;
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Cat ID: " + getId() + ", Nickname: " + getNickname() + ", Owner: " + getOwner() +
+                ", Pur Loudness: " + purLoudness);
+    }
+}
+
+class Snake extends Animal {
+    private int venomDanger;
+
+    public Snake(int id, String nickname, Owner owner, int venomDanger) {
+        super(id, nickname, owner);
+        this.venomDanger = venomDanger;
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Snake ID: " + getId() + ", Nickname: " + getNickname() + ", Owner: " + getOwner() +
+                ", Venom Danger Level: " + venomDanger);
+    }
+}
+
+class Rabbit extends Animal {
+    private int earLength;
+
+    public Rabbit(int id, String nickname, Owner owner, int earLength) {
+        super(id, nickname, owner);
+        this.earLength = earLength;
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Rabbit ID: " + getId() + ", Nickname: " + getNickname() + ", Owner: " + getOwner() +
+                ", Ear Length: " + earLength);
+    }
+}
+
+class VeterinaryClinic {
+
+    private Map<Integer, Animal> animals;
+
+    public VeterinaryClinic() {
+        animals = new HashMap<>();
+    }
+
+    public void addPets(Map<? super Integer, ? super Animal> pets) {
+        if (pets instanceof Map) {
+            pets.put(1, new Cat(1, "Whiskers", new Owner("John", "Doe", 25), 5));
+            pets.put(2, new Snake(2, "Slither", new Owner("Jane", "Smith", 30), 8));
+            pets.put(3, new Rabbit(3, "Bunny", new Owner("James", "Brown", 40), 12));
+        }
+    }
+
+    public void displayPets(Map<? extends Integer, ? extends Animal> pets) {
+        for (Map.Entry<? extends Integer, ? extends Animal> entry : pets.entrySet()) {
+            entry.getValue().displayInfo();
+        }
+    }
+
+    public void addAnimal(int id, Animal animal) {
+        animals.put(id, animal);
+    }
+
+    public void displayAllAnimals() {
+        for (Animal animal : animals.values()) {
+            animal.displayInfo();
+        }
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        VeterinaryClinic clinic = new VeterinaryClinic();
+        
+        // Add pets to the clinic using the addPets method
+        clinic.addPets(clinic.animals);
+
+        System.out.println("\nDisplaying all pets in the clinic:");
+        clinic.displayAllAnimals();
+
+        System.out.println("\nAdding a pet with an existing ID (this should replace the previous pet with ID 2):");
+        clinic.addAnimal(2, new Snake(2, "Viper", new Owner("Sarah", "Johnson", 28), 10));
+
+        // Display all animals after replacing pet with ID 2
+        clinic.displayAllAnimals();
+    }
+}
