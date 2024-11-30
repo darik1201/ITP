@@ -1,0 +1,111 @@
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+abstract class Animal {
+    private String nickname;
+
+    public Animal(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public abstract void voice();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return Objects.equals(nickname, animal.nickname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nickname);
+    }
+}
+
+class Cat extends Animal {
+    private int purLoudness;
+
+    public Cat(String nickname, int purLoudness) {
+        super(nickname);
+        this.purLoudness = purLoudness;
+    }
+
+    @Override
+    public void voice() {
+        System.out.println(getNickname() + " says: Meow (pur loudness: " + purLoudness + ")");
+    }
+}
+
+class Dog extends Animal {
+    private int barkingLoudness;
+
+    public Dog(String nickname, int barkingLoudness) {
+        super(nickname);
+        this.barkingLoudness = barkingLoudness;
+    }
+
+    @Override
+    public void voice() {
+        System.out.println(getNickname() + " says: Woof (barking loudness: " + barkingLoudness + ")");
+    }
+}
+
+public class Main {
+
+    public static void displayAnimals(Set<? extends Animal> animals) {
+        for (Animal animal : animals) {
+            System.out.println(animal.getNickname());
+        }
+    }
+
+    public static void makeTalk(Set<? extends Animal> animals) {
+        for (Animal animal : animals) {
+            animal.voice();
+        }
+    }
+
+    public static void addAnimals(Set<? super Animal> animals) {
+        animals.add(new Cat("Kitty", 5));
+        animals.add(new Dog("Rex", 8));
+    }
+
+    public static void main(String[] args) {
+        Set<Animal> animals = new HashSet<>();
+        Set<Cat> cats = new HashSet<>();
+        Set<Dog> dogs = new HashSet<>();
+
+        Cat cat1 = new Cat("Fluffy", 3);
+        Cat cat2 = new Cat("Misty", 7);
+        Dog dog1 = new Dog("Buddy", 5);
+        Dog dog2 = new Dog("Max", 10);
+
+        cats.add(cat1);
+        cats.add(cat2);
+        dogs.add(dog1);
+        dogs.add(dog2);
+
+        System.out.println("Displaying Animals:");
+        displayAnimals(animals);
+        System.out.println();
+
+        System.out.println("Making animals talk:");
+        makeTalk(cats);
+        makeTalk(dogs);
+        System.out.println();
+
+        System.out.println("Adding more animals:");
+        addAnimals(animals);
+        displayAnimals(animals);
+        System.out.println();
+
+        System.out.println("Making all animals talk again:");
+        makeTalk(animals);
+    }
+}
